@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=1024">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="/static/global_styles.css">
+    <link rel="stylesheet" href="/static/new_page_styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
+
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: { inlineMath: [['$', '$'], ['$$', '$$']] }
+        });
+    </script>
+    <title>physilingUA</title>
+    <link rel="icon" href="https://iili.io/JVBn4F1.png">
+</head>
+
+<body>
+    <ul class="bar" x-data="{ pageName: '{{.PageName}}' }">
+        <li :class="pageName === 'why' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./">physilingUA</a>
+        </li>
+        <li :class="pageName === 'how' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text" href="./how">Як?</a>
+        </li>
+        <li :class="pageName === 'catalogue' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./catalogue">Каталог</a></li>
+        <li :class="pageName === 'new' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./new">Створити</a></li>
+    </ul>
+
+    <div class="page-body">
+        <div id="popup" style="display: none;" class="popup">
+            <p class="popup-text">🏁 Форма надіслана успішно! 🏁</p>
+        </div>
+
+        <form class="problem-form-container" id="forma" onkeydown="return event.key != 'Enter';">
+            <div class="message" id="message">
+                технічні проблеми, будь-ласка не звертайте уваги на повідомлення
+            </div>
+            <a class="instruction" style="margin-bottom: 0rem;">Вкажіть номер задачі...</a>
+            <div class="top-row-container">
+                <div>
+                    <div>
+                        <section class="select-menu" id="selectMenu">
+                            <input type="hidden" name="number" id="hiddenInput" required>
+                            <div class="sl-btn" id="selectBtn">
+                                <span id="selected-number">&#8470</span>
+                                <i class="icon"><svg width="1em" height="1em" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="feather feather-chevron-down">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg></i>
+                            </div>
+                            <div class="sl-content">
+                                <div class="sl-search">
+                                    <input type="text" name="number" id="countryInput" placeholder="Пошук"
+                                        autocomplete="off" spellcheck="false">
+                                </div>
+                                <div class="sl-options">
+                                    <ul id="CountryList"></ul>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div id="number-error" class="error">
+                        * вкажіть номер задачі
+                    </div>
+                </div>
+
+                <div class="submit-button-container" id="button-holder">
+                    <button id="main-button" class="submit-button"><i class="fas fa-paper-plane"></i> Надіслати
+                        переклад</button>
+                </div>
+            </div>
+
+            <div class="problem-text-container" id="text-cont">
+                <a class="instruction">Створіть та відредагуйте переклад...</a>
+                <div class="prb-fields">
+                    <div class="input-container">
+                        <textarea id="rawUserText" class="input-body" name="text" rows="10" cols="60"
+                            placeholder="Уведіть переклад задачі.." required></textarea>
+                    </div>
+
+                    <div class="rendered-container">
+                        <p class="rendered-body" class="no-text" id="renderedWindow">Тут відображатиметься ваша
+                            задача...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-text-container" id="text-cont">
+                <a class="instruction">Також перекладіть відповідь до задачі...</a>
+                <div class="prb-fields">
+                    <div class="input-container">
+                        <textarea id="rawUserAnswerText" name="answer" class="input-answer-body" rows="1" cols="60"
+                            placeholder="Уведіть відповідь задачі.." required></textarea>
+                    </div>
+
+                    <div class="rendered-container">
+                        <a class="rendered-answer-body" class="no-text" id="renderedAnswerWindow">Відповідь...</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="optional-row">
+                <div class="bottom-wraper">
+                    <a class="instruction">За наявності, вкладіть малюнок до задачі</a>
+
+                    <div class="file-upload-container">
+
+                        <div class="add-image-button">
+                            <label for="imageUpload" class="custom-file-upload">
+                                <i class="fas fa-file-upload" style="margin: 0.5rem;"></i> зображення
+                            </label>
+                            <input type="file" id="imageUpload" name="images" accept="image/*" multiple
+                                onchange="checkImageCount()">
+                        </div>
+                        <div class="files-and-message">
+                            <div class="added-images" id="added-images">
+                            </div>
+                            <div class="writings">
+                                <button class="clear-button" type="button" id="clr-butt"
+                                    onclick="clearFileInput()">Clear</button>
+                                <div class="error" id="error-message"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-wraper">
+                    <a class="instruction">При потребі додайте коментар...</a>
+                    <textarea id="comment" placeholder="коментар.." name="comment" cols="40" rows="1"
+                        class="comment"></textarea>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</body>
+
+<script>
+    var mydata = JSON.parse('{{.ProblemsList}}');
+    var ready_problems = JSON.parse('{{.ReadyProblems}}')
+    var pending_problems = JSON.parse('{{.WaitingProblems}}')
+    var images_list = document.getElementById("added-images")
+    function showUploadedImages(list) {
+        let li = '';
+        for (var i = 0; i < list.length; i++) {
+            let file_name = list[i].name;
+            li += `<div class="added-img">${file_name}</div>`;
+
+        };
+        images_list.innerHTML = li
+    }
+
+    var fileInput = document.getElementById('imageUpload');
+    var errorMessage = document.getElementById('error-message');
+    var clearButton = document.getElementById("clr-butt")
+
+    function checkImageCount() {
+        console.log(fileInput.files)
+
+        if (fileInput.files.length > 3) {
+            errorMessage.innerHTML = '* оберіть до 3-ох зображень!';
+            errorMessage.style.display = "block"
+            fileInput.value = '';
+        } else {
+            if (errorMessage != null) {
+                errorMessage.style.display = "none"
+            }
+            showUploadedImages(fileInput.files)
+            clearButton.style.display = "block"
+        }
+    }
+
+    function clearFileInput() {
+        var fileInput = document.getElementById('imageUpload');
+        fileInput.value = '';
+        var addedImagesDiv = document.getElementById('added-images');
+        addedImagesDiv.innerHTML = '';
+        if (errorMessage != null) {
+            errorMessage.innerText = '';
+        }
+        clearButton.style.display = "none"
+    }
+</script>
+
+
+<script src="/static/new_page_script.js"></script>
+
+</html>

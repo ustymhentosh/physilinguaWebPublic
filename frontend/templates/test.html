@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>physilingUA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://iili.io/JVBn4F1.png">
+</head>
+
+<body>
+    <div id="sidebar"></div>
+    <div id="content">
+        <!-- Your Markdown content goes here -->
+        <h1 id="section1">Section 1</h1>
+        <h2 id="subsection1">Subsectio</h2>
+        <h1 id="section2">Section 2</h1>
+        <h2 id="section3">Section 3</h2>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var sidebar = document.getElementById('sidebar');
+            var content = document.getElementById('content');
+            var headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+            var navHtml = '<ul>';
+            var currentLevel = 0;
+
+            headings.forEach(function (heading) {
+                var id = heading.getAttribute('id');
+                var text = heading.innerText;
+                var tagName = heading.tagName.toLowerCase();
+
+                var level = parseInt(tagName.charAt(1));
+                var indentation = (level - 1) * 20;
+                currentLevel = level;
+                navHtml += '<li style="margin-left:' + indentation + 'px;"><a href="#' + id + '">' + text + '</a></li>';
+            });
+
+            navHtml += '</ul>';
+            sidebar.innerHTML = navHtml;
+        });
+
+    </script>
+</body>
+
+
+</html>
+
+<style>
+    #sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: #f4f4f4;
+        padding: 20px;
+        overflow-y: auto;
+    }
+
+    #content {
+        margin-left: 220px;
+        /* Adjust to accommodate sidebar width */
+    }
+</style>

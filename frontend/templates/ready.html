@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>physilingUA</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="/static/global_styles.css">
+    <script type="module" src="https://md-block.verou.me/md-block.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: { inlineMath: [['$', '$'], ['$$', '$$']] }
+        });
+    </script>
+    <link rel="icon" href="https://iili.io/JVBn4F1.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- <meta name="viewport" content="initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=0.4"> -->
+    <meta name="viewport" content="width=1024">
+
+</head>
+
+<body>
+    <div class="central-div">
+        <a href="#" onclick="history.back()" class="back-button"><i class="fas fa-arrow-left"></i></a>
+        <div class="text-frame">
+            <md-block id="problemText" class="problemText">
+                {{.MDFile}}
+            </md-block>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script type="module">
+    var renderedWindow = document.getElementById("problemText");
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, "previewParagraph"]);
+</script>
+
+
+<style>
+    .central-div {
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-top: 0%;
+    }
+
+    .problemText {
+        text-align: justify;
+    }
+
+    .back-button {
+        display: inline-block;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        background-color: #edb7f6;
+        color: #000000;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .text-frame {
+        border-radius: 10px;
+        background-color: #F2F7FA;
+        padding: 3%;
+    }
+</style>

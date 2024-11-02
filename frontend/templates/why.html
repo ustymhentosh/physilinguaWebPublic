@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <link rel="stylesheet" href="/static/global_styles.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <title>physilingUA</title>
+    <link rel="icon" href="https://iili.io/JVBn4F1.png">
+</head>
+
+<body>
+    <ul class="bar" x-data="{ pageName: '{{.PageName}}' }">
+        <li :class="pageName === 'why' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text" href="./">
+                physilingUA</a>
+        </li>
+        <li :class="pageName === 'how' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text" href="./how">Як?</a>
+        </li>
+        <li :class="pageName === 'catalogue' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./catalogue">Каталог</a></li>
+        <li :class="pageName === 'new' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./new">Створити</a></li>
+    </ul>
+
+    <div class="writings">
+        <div class="texts">
+            <div class="title">
+                <img src="https://iili.io/JVBn4F1.png" width="100">
+
+                <h1 class="name">physilingUA</h1>
+            </div>
+            <p class="site-aim">
+                Веб-застосунок із метою сворення українського перекладу збірника задач із фізики, що у
+                побуті носить назву “савченко”.
+            </p>
+            <p class="site-intro">
+                Оскільки створення професійного перекладу це складний і довготривалий процес,
+                наш застосунок пропонує альтернативу - командний переклад збірника спільнотою. Переглянути оригінальний
+                файл можна за <a class="link-style"
+                    href="https://drive.google.com/file/d/1FpXAY7flJD73I8tXZe4822ecGj6bGeY1/view">цим посиланням.</a>
+                Кожен охочий має можливіть запропонувати свій переклад необмеженої кількості задач,
+                цей переклад буде перевірено, і опубліковано.
+            </p>
+            <p class="other-instruntions">
+                Фінальн ціль - об’єднити усі переклади у один повноцінний українізований збірник.
+            <div class="points">
+                • Усі вказівки та інструкції із користування, знаходяться у вкладці - <a class="link-style"
+                    href="/how">Як?</a>
+                <br>
+                • Головна сторінка із задачами знаходиться у вкладці - <a class="link-style"
+                    href="/catalogue">Каталог</a>
+            </div>
+
+            </p>
+        </div>
+    </div>
+
+</body>
+
+<style>
+    .writings {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .name {
+        font-size: 3rem;
+        font-weight: 700;
+    }
+
+    .title {
+        display: flex;
+        flex-direction: row;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .site-intro {
+        font-size: 1.5rem;
+        text-align: left;
+    }
+
+    .site-aim {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 4rem;
+    }
+
+    .other-instruntions {
+        font-size: 1.5rem;
+        text-align: left;
+    }
+
+    .points {
+        font-size: 1.5rem;
+        text-align: left;
+    }
+
+    .texts {
+        flex-direction: column;
+        align-self: center;
+        justify-self: center;
+        margin-left: 13%;
+        margin-right: 13%;
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+    }
+</style>
+
+</html>

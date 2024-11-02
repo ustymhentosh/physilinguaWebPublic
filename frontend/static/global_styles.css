@@ -1,0 +1,81 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background-color: #ffffff;
+}
+
+/* @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
+    html {
+        transform: rotate(-90deg);
+        transform-origin: left top;
+        width: 100vh;
+        height: 100vw;
+        overflow-x: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+} */
+
+.in-bar-text {
+    text-decoration: none;
+    color: #bfd6f1;
+}
+
+.in-bar-text:hover {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.link-style {
+    text-decoration: none;
+    color: #19A7CE;
+}
+
+.link-style:hover {
+    color: rgb(43, 0, 255);
+}
+
+.bar {
+    font-family: 'Inter', sans-serif;
+    background-color: #001029;
+    display: flex;
+    align-self: start;
+    gap: 1rem;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 0.5rem;
+}
+
+.not-active-tab {
+    background-color: #002766;
+    padding: 0.8rem;
+    display: inline;
+    font-size: large;
+    margin-top: 1rem;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+/* .not-active-tab:hover {
+    background-color: #0048A7;
+} */
+
+.active-tab {
+    background-color: #ffffff;
+    color: #001029;
+    padding: 0.8rem;
+    display: inline;
+    font-size: large;
+    margin-top: 1rem;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.active-tab a {
+    color: #001029;
+}
+
+.active-tab a:hover {
+    color: #001029;
+}

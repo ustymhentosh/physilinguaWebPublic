@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="/static/global_styles.css">
+    <title>physilingUA</title>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: { inlineMath: [['$', '$'], ['$$', '$$']] }
+        });
+    </script>
+    <link rel="icon" href="https://iili.io/JVBn4F1.png">
+</head>
+
+<body>
+    <ul class="bar" x-data="{ pageName: '{{.PageName}}' }">
+        <li :class="pageName === 'why' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./">physilingUA</a>
+        </li>
+        <li :class="pageName === 'how' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text" href="./how">Як?</a>
+        </li>
+        <li :class="pageName === 'catalogue' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./catalogue">Каталог</a></li>
+        <li :class="pageName === 'new' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./new">Створити</a></li>
+    </ul>
+
+    <div class="general-container">
+        <!-- <div class="navigation-bar" id="sidebar"></div> -->
+
+        <div class="main-text" id="content">
+            <h2 class="head1" id="review">
+                Перегляд
+            </h2>
+            <p class="simple-text">Усі перекладені задачі, які були перевірені нашою командою можна переглянути на
+                сторінці
+                <a class="link-style" href="/catalogue">Каталог</a>, включно зі загальним списком усіх
+                задач що містяться у збірнику. Доступні до перегляду номери виділені зеленим кольором. Просто натисніть
+                на зелену задачу, її переклад повинен відкритися на сторінці. Без кольору
+                ті задачі, які потребують перекладу. Жовтим позначені задачі переклад яких був надісланий, але ще
+                не перевірений нами. Є можливість шукати задачу за допомогою вікна введення зліва у верхньому куті.
+            </p>
+            <h2 class="head1" id="creation">
+                Створення перекладу
+            </h2>
+            <p class="simple-text">Для того щоб створити новий переклад для задачі, оберіть її у каталозі, або
+                перейдіть
+                на сторінку <a class="link-style" href="new">Створити</a>, та оберіть відповіний номер у випадайці.
+                <br><br>
+                Наступриий крок - це переклад самої задачі. Вам необхідно знайти оригінальну умову у <a target=”_blank”
+                    class="link-style"
+                    href="https://drive.google.com/file/d/1FpXAY7flJD73I8tXZe4822ecGj6bGeY1/view">збірнику</a>, та
+                перекласти її українською мовою. Сервіси такі як google translate часо можуть помилятися, та не
+                володіють мовою так само добре як люди, тому закликаємо вас особисто перевіряти кожну частину задачі.
+                Якомога точніше потрібно перекладити фізичні терміни та понятя.
+                <br><br>
+                Важлива частина перекладу, це написання грецьких літер, формул та чисел. Для забезпечення цього
+                наш сайт використовує мову рзмітки данних - <a class="link-style" target=”_blank”
+                    href="https://uk.wikipedia.org/wiki/LaTeX">LaTeX</a>.
+            </p>
+            <h4 id="latex">LaTeX</h4>
+            <p class="simple-text">Мова LaTeX широко розповсюдженна у всьому світ та "вважається стандартом для
+                підготовки математичних і технічних текстів" тому для фізичного збірника це ключовий інструмент. У
+                нашому випадку ми не створюємо повноцінний документ, а лише використовуємо формули всередині рядків. Для
+                того щоб позначити використання latex викристовуємо знаки доллара із обох боків виразу.<br><br> Приклад:
+                якщо записати формулу Еквівалентності маси та енергії <span class="tex2jax_ignore">$E = mc^2$</span>, це
+                буде виглядати як: $E = m\cdot c^2$. Таким чином можна оформити практично будь-яку фізичну чи
+                математичну формулу.</p>
+
+            <div class="table-latex">
+                <div class="one-latex-trans-row">
+                    <p> $I = \frac{U}{R}$ </p>
+                    <p class="tex2jax_ignore"> $I = \frac{U}{R}$</p>
+                </div>
+                <div class="one-latex-trans-row">
+                    <p> $\lim_{x \to +\infty} f(x)$</p>
+                    <p class="tex2jax_ignore">$\lim_{x \to +\infty} f(x)$</p>
+                </div>
+                <div class="one-latex-trans-row">
+                    <p>
+                        $\sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}$
+                    </p>
+                    <p class="tex2jax_ignore"> $\sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}$</p>
+                </div>
+            </div>
+            <p class="simple-text">Для кращого ознайомлення із синтаксисом існує багато ресурсів: <a target=”_blank”
+                    class="link-style"
+                    href="https://math.meta.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">посилання
+                    на швидку інструкцію↗️</a> | <a target=”_blank” class="link-style"
+                    href="https://latexeditor.lagrida.com/">посилання
+                    на онлайн генератор↗️</a>.
+                Також якщо бажаєте мати повноцінний редактор на комп'ютері, рекомендуємо завантажити додаток <a
+                    target=”_blank” class="link-style" href="https://obsidian.md/download"> Obsidian </a> який дозволяє
+                вести нотатки поєднюючи latex і звичайний текст.</p>
+            <p class="simple-text">
+                На сторінці створення нового перекладу розміщено два текстових поля, у вікно зліва ви вводете переклад
+                із написаними формулами, а праворуч усі формули будуть перетворені у фінальний вигляд. Будь-які числа і
+                числові вирази що містяться у задачі також потрібно помістити між знаками долларів.
+            </p>
+            <h4 id="rest">Відповідь, зображення, коментар</h4>
+            <p class="simple-text">На останніх сторінках збірника знаходяться відповіді до деякої частини задач. При
+                наявності відповіді також перекладіть її та введіть у форму в наступному текстовому полі. Відповідь
+                також часто містить формули та числа, тому для її введеня також дано друге вікно відображення.
+            </p>
+            <p class="simple-text">
+                Якщо до задачі потрібне зображення/малюнок його також потрібно вкласти у форму. Переважно біля рисунку є
+                підпис до якого номеру він належить. Якщо маєте доступ до фото-редакторів, або ж до Microsoft Word чи
+                Google Docs, напис можливо вирізати, та дописати новий уже перекладений.<br>
+                <img src="https://iili.io/JVffOzP.png" width="500"><br>
+                Якщо не маєте такої можливості, то вкладіть обрізане зображення без надпису номера. Максимальна
+                кількість зображень що можна надіслати до однієї задачі - 3.
+            </p>
+            <p class="simple-text">
+                Якщо у вас виникли труднощі із перекладом, (не знийшли відповідного українського слова, у задачі більше
+                ніж 3 зображення...) напишіть коментар до перекладу. Коментар не буде показаний у фінальному перекладі.
+            </p>
+            <h4 id="finish">
+                Завершення
+            </h4>
+            <p class="simple-text">Післа створення перекладу, введення його у текстові поля, та із можливими
+                додатками(відповідь, зображення
+                ...) натисніть один раз зелену кнопку "Надіслати переклад". Надсилання може зайняти кілька секунд, тому
+                дочекайтеся того щоб форма спорожнилася, так можна зрозуміти що її прийнято. Після цого у вкладці
+                Каталог номер вашої задачі повинен змінитися на жовтий.</p>
+            <h2 id="other">
+                Інше
+            </h2>
+            <p class="simple-text">Користування нашим застосунком не вимагає реєстрації, відповідно ваша особистість не
+                фіксується. Та якщо
+                маєте бажання, можете ззалишити сво'є ім'я у коментарі.</p>
+            <p class="simple-text">Якщо у вас виниклии пропозиції для вдосконалення, або ж ви помітили недоліки у
+                роботі, із нами можна
+                зв'язатися через електронну пошту <span style="color: forestgreen;">physics.bridge.ua@gmail.com</span>
+            </p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+
+<script type="module">
+    document.addEventListener("DOMContentLoaded", function () {
+        var sidebar = document.getElementById('sidebar');
+        var content = document.getElementById('content');
+        var headings = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+        var navHtml = '<div>';
+        var currentLevel = 0;
+
+        headings.forEach(function (heading) {
+            var id = heading.getAttribute('id');
+            var text = heading.innerText;
+            var tagName = heading.tagName.toLowerCase();
+
+            var level = parseInt(tagName.charAt(1));
+            var indentation = (level - 2) * 0.5;
+            currentLevel = level;
+            navHtml += '<span style="margin-left:' + indentation + 'rem;"><a class="bar-link" href="#' + id + '">' + "- " + text + '</a> <br></span>';
+        });
+
+        navHtml += '</div>';
+        sidebar.innerHTML = navHtml;
+    });
+
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, "torender"]);
+</script>
+
+<style>
+    .one-latex-trans-row {
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+    }
+
+    .general-container {
+        display: flex;
+        flex-direction: row;
+        margin-top: 5%;
+        margin-right: 20%;
+        margin-left: 20%;
+    }
+
+    .navigation-bar {
+        background-color: #E1EAF4;
+        padding: 1rem;
+        border-radius: 5px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .bar-link {
+        text-decoration: none;
+        font-family: 'Inter', sans-serif;
+        color: black;
+        white-space: nowrap;
+    }
+
+    .simple-text {
+        text-align: justify;
+        font-family: 'Inter', sans-serif;
+        line-height: 1.5rem;
+    }
+
+    .table-latex {
+        display: flex;
+        flex-direction: column;
+    }
+</style>

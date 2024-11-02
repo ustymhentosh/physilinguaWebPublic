@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link rel="stylesheet" href="/static/global_styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+    <title>physilingUA</title>
+    <link rel="icon" href="https://iili.io/JVBn4F1.png">
+</head>
+
+
+<body>
+    <ul class="bar" x-data="{ pageName: '{{.PageName}}' }">
+        <li :class="pageName === 'why' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./">physilingUA</a>
+        </li>
+        <li :class="pageName === 'how' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text" href="./how">Як?</a>
+        </li>
+        <li :class="pageName === 'catalogue' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./catalogue">Каталог</a></li>
+        <li :class="pageName === 'new' ? 'active-tab' : 'not-active-tab'"><a class="in-bar-text"
+                href="./new">Створити</a></li>
+    </ul>
+
+
+    <div class="main-content" x-data="maincont"
+        x-init="items = await (await fetch('./static/precomputed/problems_list.json')).json();">
+
+        <div class="top_row">
+            <div class="controls-container">
+                <div class="search-container">
+                    <div class="icon-wraper"><i class="fas fa-search"></i></div>
+                    <input x-model="search" type="text" class="search-bar" placeholder="Search...">
+                </div>
+            </div>
+
+            <div class="legend-container">
+                <div class="one-mark-cont">
+                    <div class="green-box"></div>
+                    <a>- задача перкладена</a>
+                </div>
+
+                <div class="one-mark-cont">
+                    <div class="orange-box"></div>
+                    <a>- запропонований переклад перевіряється</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <template x-for="chapter in chapters" :key="chapter">
+                <div class="chapter-container"
+                    x-show="search === '' || search.startsWith(chapter + '.') || search === chapter.toString()">
+                    <div class="chapter-title" x-html="getChapterName(chapter)"
+                        x-show="search === '' || search.startsWith(chapter + '.') || search === chapter.toString()">
+                    </div>
+                    <div x-data="infoproblems" class="problems-container">
+                        <template x-for="problem in groupProblemsByChapter(chapter)" :key="problem">
+                            <div x-on:click="location.href =getProblemUrl(problem);" class="single-problem"
+                                x-text="problem" :class="getProblemClass(problem)">
+
+                            </div>
+                        </template>
+                    </div>
+
+                </div>
+            </template>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+<script>
+    var donePs = JSON.parse('{{.DoneProblems}}');
+    var waitingPs = JSON.parse('{{.WaitingProblems}}');
+    if (donePs === null) {
+        donePs = ["0.0.0"];
+    }
+
+    if (waitingPs === null) {
+        waitingPs = ["0.0.0"];
+    }
+
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('infoproblems', () => ({
+            doneProbs: donePs,
+            waitingProbs: waitingPs,
+            getProblemClass(problemId) {
+                if (this.doneProbs.includes(problemId)) {
+                    return 'done-problem';
+                } else if (this.waitingProbs.includes(problemId)) {
+                    return 'waiting-problem';
+                }
+                return 'single-problem';
+            },
+            getProblemUrl(problemId) {
+                if (this.doneProbs.includes(problemId)) {
+                    return './ready?problem=' + problemId;
+                } else if (this.waitingProbs.includes(problemId)) {
+                    return './new?which=' + problemId + "&yellow=true";
+                }
+                return './new?which=' + problemId;
+            },
+        }))
+
+        Alpine.data('maincont', () => ({
+            donePs: 'hello',
+            waitingPs: 'bye',
+            search: '',
+            items: [],
+            chapters: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14'],
+            get filteredItems() {
+                return this.items.filter(i => i.startsWith(this.search));
+            },
+            chapterHasMatchingProblems(chapter) {
+                return this.filteredItems.some(item => item.startsWith(chapter + '.'));
+            },
+            groupProblemsByChapter(chapter) {
+                return this.filteredItems.filter(item => item.startsWith(chapter + '.'));
+            },
+            getChapterName(chapter) {
+                if (chapter === '1') {
+                    return `Розділ ` + chapter + `. ` + `<b>КІНЕМАТИКА</b>`;
+                } else if (chapter === '2') {
+                    return `Розділ ` + chapter + `. ` + `<b>ДИНАМІКА</b>`;
+                } else if (chapter === '3') {
+                    return `Розділ ` + chapter + `. ` + `<b>КОЛИВАННЯ ТА ХВИЛІ</b>`;
+                } else if (chapter === '4') {
+                    return `Розділ ` + chapter + `. ` + `<b>МЕХАНІКА РІДИНИ</b>`;
+                } else if (chapter === '5') {
+                    return `Розділ ` + chapter + `. ` + `<b>МОЛЕКУЛЯРНА ФІЗИКА</b>`;
+                } else if (chapter === '6') {
+                    return `Розділ ` + chapter + `. ` + `<b>ЕЛЕКТРОСТАТИКА</b>`;
+                } else if (chapter === '7') {
+                    return `Розділ ` + chapter + `. ` + `<b>РУХ ЗАРЯДЖЕНИХ ЧАСТИНОК В ЕЛЕКТРИЧНОМУ ПОЛІ</b>`;
+                } else if (chapter === '8') {
+                    return `Розділ ` + chapter + `. ` + `<b>ЕЛЕКТРИЧНИЙ СТРУМ</b>`;
+                } else if (chapter === '9') {
+                    return `Розділ ` + chapter + `. ` + `<b>ПОСТІЙНЕ МАГНІТНЕ ПОЛЕ</b>`;
+                } else if (chapter === '10') {
+                    return `Розділ ` + chapter + `. ` + `<b>РУХ ЗАРЯДЖЕНИХ ЧАСТИНОК В СКЛАДНИХ ПОЛЯХ</b>`;
+                } else if (chapter === '11') {
+                    return `Розділ ` + chapter + `. ` + `<b>ЕЛЕКТРОМАГНІТНА ІНДУКЦІЯ</b>`;
+                } else if (chapter === '12') {
+                    return `Розділ ` + chapter + `. ` + `<b>ЕЛЕКТРОМАГНІТНІ ХВИЛІ</b>`;
+                } else if (chapter === '13') {
+                    return `Розділ ` + chapter + `. ` + `<b>ГЕОМЕТРИЧНА ОПТИКА. ФОТОМЕТРІЯ. КВАНТОВА ПРИРОДА СВІТЛА</b>`;
+                } else if (chapter === '14') {
+                    return `Розділ ` + chapter + `. ` + `<b>СПЕЦІАЛЬНА ТЕОРІЯ ВІДНОСНОСТІ</b>`;
+                }
+            },
+        }
+        ))
+    })
+
+</script>
+
+
+<style>
+    .main-content {
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 1rem;
+    }
+
+    .search-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        background-color: #E1EAF4;
+        padding: 0.1rem;
+        border-radius: 5px;
+    }
+
+    .top_row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .controls-container {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .legend-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+
+    .one-mark-cont {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .green-box {
+        padding: 1rem;
+        text-align: center;
+        box-sizing: border-box;
+        border-radius: 5px;
+        background-color: #b8ff94;
+        margin-right: 0.2rem;
+    }
+
+    .orange-box {
+        padding: 1rem;
+        text-align: center;
+        box-sizing: border-box;
+        border-radius: 5px;
+        background-color: #fffb94;
+        margin-right: 0.2rem;
+    }
+
+    .icon-wraper {
+        margin: 0.4rem;
+        text-align: center;
+        color: #000000;
+        font-size: 17px;
+    }
+
+    .search-bar {
+        margin: 0.5rem;
+        border: none;
+        background-color: #E1EAF4;
+        outline: none;
+    }
+
+    .translate-form-button-cont {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .translate-button {
+        padding: 0.5rem;
+        border-radius: 5px;
+        font-family: 'Inter', sans-serif;
+        font-size: medium;
+        background-color: white;
+        color: black;
+        border: 2px solid #E1EAF4;
+    }
+
+    .translate-button:hover {
+        background-color: #E1EAF4;
+        cursor: pointer;
+        border: 2px solid #a4c9f3;
+    }
+
+    .content-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3rem;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .chapter-title {
+        font-family: 'Inter', sans-serif;
+        text-align: center;
+        padding: 0.5rem;
+        border-radius: 5px;
+        font-size: large;
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .chapter-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem;
+        border-radius: 10px;
+        background-color: #F2F7FA;
+    }
+
+    .problems-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+
+    .single-problem {
+        flex: 1 1 10%;
+        padding: 0.5rem;
+        text-align: center;
+        box-sizing: border-box;
+        border-radius: 5px;
+        background-color: #FFFFFF;
+        border: 1px solid transparent;
+        cursor: pointer;
+    }
+
+    .done-problem {
+        background-color: #b8ff94;
+    }
+
+    .waiting-problem {
+        background-color: #fffb94;
+    }
+
+
+    .single-problem:hover {
+        border-color: rgb(43, 0, 255);
+        color: rgb(43, 0, 255);
+    }
+</style>
+
+</html>
